@@ -41,7 +41,7 @@ namespace rdx::f2c {
 			header_file_name.replace_extension(".h");
 			std::stringstream source_stream;
 			source_stream << "#include " << header_file_name.filename() << "\n\n";
-			source_stream << "const unsigned char " << variable_name << "[" << bytes.size() << "] = { \n";
+			source_stream << "static const unsigned char " << variable_name << "[" << bytes.size() << "] = { \n";
 			source_stream << std::hex << std::showbase;
 			int columns = 0;
 			for(auto it = bytes.begin(); it != bytes.end(); it++) {
@@ -60,7 +60,7 @@ namespace rdx::f2c {
 				}
 			}
 			source_stream << "\n};\n\n";
-			source_stream << "const unsigned int " << variable_name << "_size = " << std::dec << bytes.size() << ";\n";
+			source_stream << "static const unsigned int " << variable_name << "_size = " << std::dec << bytes.size() << ";\n";
 			return source_stream.str();
 		}
 	};
@@ -77,8 +77,8 @@ namespace rdx::f2c {
 			header_stream << "#ifndef " << include_guard << "\n";
 			header_stream << "#define " << include_guard << "\n\n";
 			header_stream << "namespace " << name_space << " { \n";
-			header_stream << "\textern const unsigned char " << variable_name << "[" << bytes.size() << "];\n";
-			header_stream << "\textern const unsigned int " << variable_name << "_size; \n";
+			header_stream << "\tstatic const unsigned char " << variable_name << "[" << bytes.size() << "];\n";
+			header_stream << "\tstatic const unsigned int " << variable_name << "_size; \n";
 			header_stream << "}\n";
 			header_stream << "#endif";
 			return header_stream.str();
@@ -90,7 +90,7 @@ namespace rdx::f2c {
 			std::stringstream source_stream;
 			source_stream << "#include " << header_file_name.filename() << "\n\n";
 			source_stream << "namespace " << name_space << "{\n";
-			source_stream << "\tconst unsigned char " << variable_name << "[" << bytes.size() << "] = { \n\t";
+			source_stream << "\tstatic const unsigned char " << variable_name << "[" << bytes.size() << "] = { \n\t";
 			source_stream << std::hex << std::showbase;
 			int columns = 0;
 			for(auto it = bytes.begin(); it != bytes.end(); it++) {
@@ -110,7 +110,7 @@ namespace rdx::f2c {
 				}
 			}
 			source_stream << "\n\t};\n\n";
-			source_stream << "\tconst unsigned int " << variable_name << "_size = " << std::dec << bytes.size() << ";\n";
+			source_stream << "\tstatic const unsigned int " << variable_name << "_size = " << std::dec << bytes.size() << ";\n";
 			source_stream << "}";
 			return source_stream.str();
 		}

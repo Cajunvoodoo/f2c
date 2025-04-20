@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstring>
+
 namespace rdx::f2c {
 }	// namespace rdx::f2c
 
