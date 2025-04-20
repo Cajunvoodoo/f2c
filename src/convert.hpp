@@ -40,7 +40,8 @@ namespace rdx::f2c {
 			std::filesystem::path header_file_name = out_file;
 			header_file_name.replace_extension(".h");
 			std::stringstream source_stream;
-			source_stream << "#include " << header_file_name.filename() << "\n\n";
+			// For my uses, i don't want or need a header.
+			// source_stream << "#include " << header_file_name.filename() << "\n\n";
 			source_stream << "static const unsigned char " << variable_name << "[" << bytes.size() << "] = { \n";
 			source_stream << std::hex << std::showbase;
 			int columns = 0;
